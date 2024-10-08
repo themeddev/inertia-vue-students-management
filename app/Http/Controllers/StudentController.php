@@ -2,69 +2,73 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\StudentResource;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use App\Http\Resources\ClasseResource;
+use App\Http\Resources\StudentResource;
+use Illuminate\Database\Eloquent\Builder;
+use App\Models\Classe;
 
 class StudentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        $students = StudentResource::collection(Student::all());
+        $studentQuery = Student::search($request);
+        $classes = ClasseResource::collection(Classe::all());
 
-        return inertia('Students/index', [
-            'students' => $students,
+        return inertia('Student/Index', [
+            'students' => StudentResource::collection(
+                $studentQuery->paginate(5)
+            ),
+            'classes' => $classes,
+            'search' => request('search') ?? ''
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    protected function applySearch(Builder $query, $search)
     {
-        //
+        return $query->when($search, function ($query, $search) {
+            $query->where('name', 'like', '%' . $search . '%');
+        });
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+    // public function create()
+    // {
+    //     $classes = ClasseResource::collection(Classe::all());
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+    //     return inertia('Student/Create', [
+    //         'classes' => $classes
+    //     ]);
+    // }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+    // public function store(StoreStudentRequest $request)
+    // {
+    //     Student::create($request->validated());
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+    //     return redirect()->route('students.index');
+    // }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+    // public function edit(Student $student)
+    // {
+    //     $classes = ClasseResource::collection(Classe::all());
+
+    //     return inertia('Student/Edit', [
+    //         'student' => StudentResource::make($student),
+    //         'classes' => $classes
+    //     ]);
+    // }
+
+    // public function update(UpdateStudentRequest $request, Student $student)
+    // {
+    //     $student->update($request->validated());
+
+    //     return redirect()->route('students.index');
+    // }
+
+    // public function destroy(Student $student)
+    // {
+    //     $student->delete();
+
+    //     return redirect()->route('students.index');
+    // }
 }

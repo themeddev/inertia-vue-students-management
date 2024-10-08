@@ -9,55 +9,55 @@ defineProps({
     students: {
         type: Object,
     },
-    // classes: {
-    //     type: Object,
-    //     required: true,
-    // },
+    classes: {
+        type: Object,
+        required: true,
+    },
 });
 
-// let pageNumber = ref(1),
-//     searchTerm = ref(usePage().props.search ?? ""),
-//     class_id = ref(usePage().props.class_id ?? "");
+let pageNumber = ref(1),
+    searchTerm = ref(usePage().props.search ?? ""),
+    class_id = ref(usePage().props.class_id ?? "");
 
-// const pageNumberUpdated = (link) => {
-//     pageNumber.value = link.url.split("=")[1];
-// };
+const pageNumberUpdated = (link) => {
+    pageNumber.value = link.url.split("=")[1];
+};
 
-// let studentsUrl = computed(() => {
-//     const url = new URL(route("students.index"));
+let studentsUrl = computed(() => {
+    const url = new URL(route("students.index"));
 
-//     url.searchParams.set("page", pageNumber.value);
+    url.searchParams.set("page", pageNumber.value);
 
-//     if (searchTerm.value) {
-//         url.searchParams.set("search", searchTerm.value);
-//     }
+    if (searchTerm.value) {
+        url.searchParams.set("search", searchTerm.value);
+    }
 
-//     if (class_id.value) {
-//         url.searchParams.append("class_id", class_id.value);
-//     }
+    if (class_id.value) {
+        url.searchParams.append("class_id", class_id.value);
+    }
 
-//     return url;
-// });
+    return url;
+});
 
-// watch(
-//     () => studentsUrl.value,
-//     (newValue) => {
-//         router.visit(newValue, {
-//             replace: true,
-//             preserveState: true,
-//             preserveScroll: true,
-//         });
-//     }
-// );
+watch(
+    () => studentsUrl.value,
+    (newValue) => {
+        router.visit(newValue, {
+            replace: true,
+            preserveState: true,
+            preserveScroll: true,
+        });
+    }
+);
 
-// watch(
-//     () => searchTerm.value,
-//     (value) => {
-//         if (value) {
-//             pageNumber.value = 1;
-//         }
-//     }
-// );
+watch(
+    () => searchTerm.value,
+    (value) => {
+        if (value) {
+            pageNumber.value = 1;
+        }
+    }
+);
 
 // const deleteForm = useForm({});
 
@@ -260,10 +260,10 @@ defineProps({
                                         </tbody>
                                     </table>
                                 </div>
-                                <!-- <Pagination
+                                <Pagination
                                     :data="students"
                                     :pageNumberUpdated="pageNumberUpdated"
-                                /> -->
+                                />
                             </div>
                         </div>
                     </div>
