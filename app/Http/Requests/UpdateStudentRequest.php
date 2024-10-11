@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+// use Illuminate\Support\Facades\Auth;
 
 class UpdateStudentRequest extends FormRequest
 {
@@ -12,7 +12,7 @@ class UpdateStudentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        // return auth()->check();
+        // return Auth::check();
         return true;
     }
 
@@ -26,7 +26,7 @@ class UpdateStudentRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:students,email,' . $this->student->id],
-            'class_id' => ['required', 'exists:classes,id'],
+            'classe_id' => ['required', 'exists:classes,id'],
             'section_id' => ['required', 'exists:sections,id'],
         ];
     }
@@ -36,7 +36,7 @@ class UpdateStudentRequest extends FormRequest
         return [
             'name' => 'name',
             'email' => 'email',
-            'class_id' => 'class',
+            'classe_id' => 'class',
             'section_id' => 'section',
         ];
     }

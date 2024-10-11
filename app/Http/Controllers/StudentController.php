@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreStudentRequest;
-use App\Models\Student;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use App\Models\Student;
+use App\Models\Classe;
+use App\Http\Requests\StoreStudentRequest;
+use App\Http\Requests\UpdateStudentRequest;
 use App\Http\Resources\ClasseResource;
 use App\Http\Resources\StudentResource;
-use Illuminate\Database\Eloquent\Builder;
-use App\Models\Classe;
 
 class StudentController extends Controller
 {
