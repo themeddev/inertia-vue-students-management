@@ -1,73 +1,74 @@
 <script setup>
-import MagnifyingGlass from "@/Components/Icons/MagnifyingGlass.vue";
-import Pagination from "@/Components/Pagination.vue";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, Link, router, useForm, usePage } from "@inertiajs/vue3";
-import { ref, watch, computed } from "vue";
+    import MagnifyingGlass from "@/Components/Icons/MagnifyingGlass.vue";
+    import Pagination from "@/Components/Pagination.vue";
+    import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+    import { Head, Link, router, useForm, usePage } from "@inertiajs/vue3";
+    import { ref, watch, computed } from "vue";
 
-defineProps({
-    students: {
-        type: Object,
-    },
-    classes: {
-        type: Object,
-        required: true,
-    },
-});
+    defineProps({
+        students: {
+            type: Object,
+        },
+        classes: {
+            type: Object,
+            required: true,
+        },
+    });
 
-let pageNumber = ref(1),
-    searchTerm = ref(usePage().props.search ?? ""),
-    class_id = ref(usePage().props.class_id ?? "");
+    let pageNumber = ref(1),
+        searchTerm = ref(usePage().props.search ?? ""),
+        class_id = ref(usePage().props.class_id ?? "");
 
-const pageNumberUpdated = (link) => {
-    pageNumber.value = link.url.split("=")[1];
-};
+    const pageNumberUpdated = (link) => {
+        pageNumber.value = link.url.split("=")[1];
+    };
 
-let studentsUrl = computed(() => {
-    const url = new URL(route("students.index"));
+    let studentsUrl = computed(() => {
+        const url = new URL(route("students.index"));
 
-    url.searchParams.set("page", pageNumber.value);
+        url.searchParams.set("page", pageNumber.value);
 
-    if (searchTerm.value) {
-        url.searchParams.set("search", searchTerm.value);
-    }
-
-    if (class_id.value) {
-        url.searchParams.append("class_id", class_id.value);
-    }
-
-    return url;
-});
-
-watch(
-    () => studentsUrl.value,
-    (newValue) => {
-        router.visit(newValue, {
-            replace: true,
-            preserveState: true,
-            preserveScroll: true,
-        });
-    }
-);
-
-watch(
-    () => searchTerm.value,
-    (value) => {
-        if (value) {
-            pageNumber.value = 1;
+        if (searchTerm.value) {
+            url.searchParams.set("search", searchTerm.value);
         }
-    }
-);
 
-// const deleteForm = useForm({});
+        if (class_id.value) {
+            url.searchParams.append("class_id", class_id.value);
+        }
 
-// const deleteStudent = (id) => {
-//     if (confirm("Are you sure you want to delete this student?")) {
-//         deleteForm.delete(route("students.destroy", id), {
-//             preserveScroll: true,
-//         });
-//     }
-// };
+        return url;
+    });
+
+    watch(
+        () => studentsUrl.value,
+        (newValue) => {
+            router.visit(newValue, {
+                replace: true,
+                preserveState: true,
+                preserveScroll: true,
+            });
+        }
+    );
+
+    watch(
+        () => searchTerm.value,
+        (value) => {
+            if (value) {
+                pageNumber.value = 1;
+            }
+        }
+    );
+
+    const deleteForm = useForm({});
+
+    const deleteStudent = (id) => {
+        if (confirm("Are you sure you want to delete this student?")) {
+            deleteForm.delete(route("students.destroy", id), {
+                preserveScroll: true,
+            });
+        }
+    };
+
 </script>
 
 <template>
@@ -119,7 +120,7 @@ watch(
                             />
                         </div>
 
-                        <!-- <select
+                        <select
                             v-model="class_id"
                             class="block rounded-lg border-0 py-2 ml-5 text-gray-900 ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                         >
@@ -131,7 +132,7 @@ watch(
                             >
                                 {{ item.name }}
                             </option>
-                        </select> -->
+                        </select>
                     </div>
 
                     <div class="mt-8 flex flex-col">
