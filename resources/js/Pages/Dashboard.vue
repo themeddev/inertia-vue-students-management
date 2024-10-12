@@ -1,5 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import Statistics from '@/components/Statistics.vue';
 import { Head } from '@inertiajs/vue3';
 </script>
 
@@ -24,6 +25,8 @@ import { Head } from '@inertiajs/vue3';
                         You're logged in!
                     </div>
                 </div>
+
+                <Statistics />
             </div>
         </div>
     </AuthenticatedLayout>

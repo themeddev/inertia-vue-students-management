@@ -12,7 +12,7 @@ const showingNavigationDropdown = ref(false);
 
 <template>
     <div>
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen bg-gradient-to-r from-blue-200 to-cyan-200">
             <nav
                 class="border-b border-gray-100 bg-white"
             >
@@ -38,6 +38,12 @@ const showingNavigationDropdown = ref(false);
                                     :active="route().current('dashboard')"
                                 >
                                     Dashboard
+                                </NavLink>
+                                <NavLink
+                                    :href="route('students.index')"
+                                    :active="route().current('students.index') || route().current('students.create') || route().current('students.edit')"
+                                >
+                                    Students
                                 </NavLink>
                             </div>
                         </div>
